@@ -33,16 +33,8 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
-//builder.Services.AddDbContext<Context>(options =>
-//    options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"),
-//        opts =>
-//        {
-//            opts.EnableRetryOnFailure((int)TimeSpan.FromSeconds(5).TotalSeconds);
-//            opts.CommandTimeout((int)TimeSpan.FromMinutes(2).TotalSeconds);
-//        }));
-
 builder.Services.AddDbContext<Context>(options =>
-    options.UseSqlServer("Data Source=ZAISO-5079\\SQLEXPRESS;Initial Catalog=TestGraphQL;Integrated Security=False;User Id=sa;Password=Fabio1980;MultipleActiveResultSets=True;TrustServerCertificate=True",
+    options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"),
         opts =>
         {
             opts.EnableRetryOnFailure((int)TimeSpan.FromSeconds(5).TotalSeconds);

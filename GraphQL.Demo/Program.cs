@@ -1,6 +1,7 @@
 using GraphiQl;
 using GraphQL.Demo.Data;
 using GraphQL.Demo.Data.Access;
+using GraphQL.Demo.Data.Access.Mutations;
 using GraphQL.Demo.Data.Access.Queries;
 using GraphQL.Demo.Data.Access.Schema;
 using GraphQL.Demo.Data.Interfaces;
@@ -16,8 +17,8 @@ var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services
-    .AddScoped<IProductService,ProductService>()
-    .AddScoped<IProductRepository, ProductRepository>();
+    .AddTransient<IProductService, ProductService>()
+    .AddTransient<IProductRepository, ProductRepository>();
 
 // GraphQL 
 builder.Services.AddGraphQLServices();
@@ -32,13 +33,21 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
+//builder.Services.AddDbContext<Context>(options =>
+//    options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"),
+//        opts =>
+//        {
+//            opts.EnableRetryOnFailure((int)TimeSpan.FromSeconds(5).TotalSeconds);
+//            opts.CommandTimeout((int)TimeSpan.FromMinutes(2).TotalSeconds);
+//        }));
+
 builder.Services.AddDbContext<Context>(options =>
-    options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"),
-    opts =>
-    {
-        opts.EnableRetryOnFailure((int)TimeSpan.FromSeconds(5).TotalSeconds);
-        opts.CommandTimeout((int)TimeSpan.FromMinutes(2).TotalSeconds);
-    }));
+    options.UseSqlServer("Data Source=ZAISO-5079\\SQLEXPRESS;Initial Catalog=TestGraphQL;Integrated Security=False;User Id=sa;Password=Fabio1980;MultipleActiveResultSets=True;TrustServerCertificate=True",
+        opts =>
+        {
+            opts.EnableRetryOnFailure((int)TimeSpan.FromSeconds(5).TotalSeconds);
+            opts.CommandTimeout((int)TimeSpan.FromMinutes(2).TotalSeconds);
+        }));
 
 var app = builder.Build();
 

@@ -35,6 +35,7 @@ namespace GraphQL.Demo.Data.Repositories
         public async Task<Product> UpdateProductAsync(Product product, CancellationToken cancellationToken)
         {
             var productToUpdate = await _context.Products.SingleAsync(p => p.Id ==  product.Id, cancellationToken);
+            productToUpdate.Update(product.Name, product.Price);
             _context.Products.Update(productToUpdate);
             await CommitAsync(cancellationToken);
             return product;
@@ -42,7 +43,7 @@ namespace GraphQL.Demo.Data.Repositories
 
         public async Task DeleteProductAsync(Guid id, CancellationToken cancellationToken)
         {
-            var productToRemove = await _context.Products.SingleAsync(p => p.Id == id, cancellationToken);
+            var productToRemove = _context.Products.Single(p => p.Id == id);
             _context.Products.Remove(productToRemove);
             await CommitAsync(cancellationToken);
         }

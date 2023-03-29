@@ -16,10 +16,10 @@ namespace GraphQL.Demo.Data.Access
     {
         public static IServiceCollection AddGraphQLServices(this IServiceCollection services) 
         {
-            services.AddSingleton<ProductType>();
-            services.AddSingleton<ProductQuery>();
-            services.AddSingleton<ProductMutation>();
-            services.AddSingleton<ISchema, ProductSchema>();
+            services.AddTransient<ProductType>();
+            services.AddTransient<ProductQuery>();
+            services.AddTransient<ProductMutation>();
+            services.AddTransient<ISchema, ProductSchema>();
 
             return services;
         }

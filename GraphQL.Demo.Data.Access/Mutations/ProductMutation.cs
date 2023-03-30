@@ -17,20 +17,20 @@ namespace GraphQL.Demo.Data.Access.Mutations
             Field<ProductType>("createProduct", arguments: new QueryArguments(new QueryArgument<ProductInputType> { Name = "product" }),
                 resolve: context =>
                 {
-                    return productService.AddProduct(context.GetArgument<Product>("product")!);
+                    return productService.AddProductAsync(context.GetArgument<Product>("product")!);
                 });
 
             Field<ProductType>("updateProduct", arguments: new QueryArguments(new QueryArgument<ProductInputType> { Name = "product" }),
                 resolve: context =>
                 {
-                    return productService.UpdateProduct(context.GetArgument<Product>("product")!);
+                    return productService.UpdateProductAsync(context.GetArgument<Product>("product")!);
                 });
 
             Field<StringGraphType>("deleteProduct", arguments: new QueryArguments(new QueryArgument<GuidGraphType> { Name = "id" }),
                 resolve: context =>
                 {
                     var productId = context.GetArgument<Guid>("id");
-                    productService.DeleteProduct(productId);
+                    productService.DeleteProductAsync(productId);
                     return $"The product with Id {productId} has been deleted.";
                 });
         }

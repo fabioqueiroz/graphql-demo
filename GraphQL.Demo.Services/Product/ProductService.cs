@@ -19,39 +19,39 @@ namespace GraphQL.Demo.Services.Product
             _productRepository = productRepository;
         }
 
-        public async Task<IEnumerable<Product>> GetAllProducts()
+        public async Task<IEnumerable<Product>> GetAllProductsAsync(CancellationToken cancellationToken = default)
         {
-            return await _productRepository.GetAllProductsAsync(new CancellationToken());
+            return await _productRepository.GetAllProductsAsync(cancellationToken);
         }
 
-        public async Task<Product> GetProductById(Guid id)
+        public async Task<Product> GetProductByIdAsync(Guid id, CancellationToken cancellationToken = default)
         {
-            return await _productRepository.GetProductByIdAsync(id, new CancellationToken());
+            return await _productRepository.GetProductByIdAsync(id, cancellationToken);
         }
 
-        public async Task<Product> AddProduct(Product product)
+        public async Task<Product> AddProductAsync(Product product, CancellationToken cancellationToken = default)
         {
-            if (await _productRepository.NameExistsAsync(product.Name, new CancellationToken()))
+            if (await _productRepository.NameExistsAsync(product.Name, cancellationToken))
             {
                 throw new Exception($"Name {product.Name} already exists");
             }
 
-            return await _productRepository.AddProductAsync(product, new CancellationToken());
+            return await _productRepository.AddProductAsync(product, cancellationToken);
         }
 
-        public async Task<Product> UpdateProduct(Product product)
+        public async Task<Product> UpdateProductAsync(Product product, CancellationToken cancellationToken = default)
         {
-            if (await _productRepository.NameExistsAsync(product.Name, new CancellationToken()))
+            if (await _productRepository.NameExistsAsync(product.Name, cancellationToken))
             {
                 throw new Exception($"Name {product.Name} already exists");
             }
 
-            return await _productRepository.UpdateProductAsync(product, new CancellationToken());
+            return await _productRepository.UpdateProductAsync(product, cancellationToken);
         }
 
-        public async Task DeleteProduct(Guid id)
+        public async Task DeleteProductAsync(Guid id, CancellationToken cancellationToken = default)
         {
-            await _productRepository.DeleteProductAsync(id, new CancellationToken());
+            await _productRepository.DeleteProductAsync(id, cancellationToken);
         }
     }
 }

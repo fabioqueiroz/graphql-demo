@@ -13,12 +13,12 @@ namespace GraphQL.Demo.Data.Access.Queries
     {
         public ProductQuery(IProductService productService)
         {
-            Field<ListGraphType<ProductType>>("products", resolve: context => { return productService.GetAllProducts(); });
+            Field<ListGraphType<ProductType>>("products", resolve: context => { return productService.GetAllProductsAsync(); });
 
             Field<ProductType>("product", arguments: new QueryArguments(new QueryArgument<GuidGraphType> { Name = "id"}),
                 resolve: context => 
                 { 
-                    return productService.GetProductById(context.GetArgument<Guid>("id"));
+                    return productService.GetProductByIdAsync(context.GetArgument<Guid>("id"));
                 });
         }
     }

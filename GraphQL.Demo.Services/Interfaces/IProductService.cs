@@ -10,10 +10,10 @@ namespace GraphQL.Demo.Services.Interfaces
     using Product = Entities.Product;
     public interface IProductService
     {
-        Task<IEnumerable<Product>> GetAllProducts();
-        Task<Product> GetProductById(Guid id);
-        Task<Product> AddProduct(Product product);
-        Task<Product> UpdateProduct(Product product);
-        Task DeleteProduct(Guid id);
+        Task<IEnumerable<Product>> GetAllProductsAsync(CancellationToken cancellationToken = default);
+        Task<Product> GetProductByIdAsync(Guid id, CancellationToken cancellationToken = default);
+        Task<Product> AddProductAsync(Product product, CancellationToken cancellationToken = default);
+        Task<Product> UpdateProductAsync(Product product, CancellationToken cancellationToken = default);
+        Task DeleteProductAsync(Guid id, CancellationToken cancellationToken = default);
     }
 }
